@@ -1,9 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserIcon, LogOutIcon } from '../../components/icons';
+import { getApp, getApps } from 'firebase/app';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 
 export default function Header({ user, handleSignOut, loading, stats = { followers: 0, following: 0 } }) {
-  const displayName = user?.displayName || 'User';
-  const displayBio = user?.providerData?.[0]?.bio ?? 'This runner loves long trails, PB chasing, and coffee.';
+  const [profileDoc, setProfileDoc] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [profileError, setProfileError] = useState('');
+
+  useEffect(() => {
+    setProfileDoc(null);
+    setProfileError('');
+    setProfileLoading(true);
+
+    if (!user || !user.uid) {
+      setProfileLoading(false);
+      return;
+    }
+
+    if (!getApps().length) {
+      // Firebase app not initialized – bail out gracefully.
+      setProfileError('Firebase app is not initialized');
+      setProfileLoading(false);
+      return;
+    }
+
+    const app = getApp();
+    const db = getFirestore(app);
+    const ref = doc(db, 'users', user.uid);
+
+    const unsub = onSnapshot(
+      ref,
+      (snap) => {
+        if (snap.exists()) setProfileDoc(snap.data());
+        else setProfileDoc(null);
+        setProfileLoading(false);
+      },
+      (err) => {
+        console.error('Header: firestore error', err);
+        setProfileError('Failed to load profile data');
+        setProfileLoading(false);
+      }
+    );
+
+    return () => unsub();
+  }, [user]);
+
+  // Derive display values: prefer Firestore profileDoc, then auth `user`, then defaults.
+  const displayName = profileDoc?.name || user?.displayName || 'User';
+  const displayBio = profileDoc?.bio || user?.providerData?.[0]?.bio || 'This runner loves long trails, PB chasing, and coffee.';
+
+  const followersCount = Array.isArray(profileDoc?.followers)
+    ? profileDoc.followers.length
+    : (profileDoc?.followers ?? stats.followers ?? 0);
+
+  const followingCount = Array.isArray(profileDoc?.following)
+    ? profileDoc.following.length
+    : (profileDoc?.following ?? stats.following ?? 0);
 
   return (
     <div>
@@ -14,7 +67,7 @@ export default function Header({ user, handleSignOut, loading, stats = { followe
               src={user.photoURL}
               alt="Profile"
               className="w-20 h-20 rounded-full border-2 border-indigo-100 object-cover"
-              onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/96x96/93c5fd/ffffff?text=U'; }}
+              onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://placehold.co/96x96/93c5fd/ffffff?text=U'; }}
             />
           ) : (
             <UserIcon className="w-16 h-16 text-indigo-500" />
@@ -26,11 +79,11 @@ export default function Header({ user, handleSignOut, loading, stats = { followe
             </div>
             <div className="mt-2 flex space-x-6 text-sm text-gray-600">
               <div className="text-center">
-                <div className="font-semibold text-gray-800">{stats.followers}</div>
+                <div className="font-semibold text-gray-800">{followersCount}</div>
                 <div className="text-xs text-gray-400">Followers</div>
               </div>
               <div className="text-center">
-                <div className="font-semibold text-gray-800">{stats.following}</div>
+                <div className="font-semibold text-gray-800">{followingCount}</div>
                 <div className="text-xs text-gray-400">Following</div>
               </div>
             </div>
@@ -46,7 +99,13 @@ export default function Header({ user, handleSignOut, loading, stats = { followe
 
       {/* Bio */}
       <div className="mt-4 text-gray-700 text-sm">
-        <p className="max-w-2xl">{displayBio}</p>
+        {profileLoading ? (
+          <p className="text-sm text-gray-500">Loading profile…</p>
+        ) : profileError ? (
+          <p className="text-sm text-red-600">{profileError}</p>
+        ) : (
+          <p className="max-w-2xl">{displayBio}</p>
+        )}
       </div>
     </div>
   );
