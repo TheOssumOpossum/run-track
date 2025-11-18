@@ -1,3 +1,45 @@
+/.DS_Store
+node_modules/
+/.pnp
+.pnp.js
+
+# Vite / build
+/dist
+/.vite
+
+# dotenv
+.env
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor folders
+.vscode/
+.idea/
+.history/
+
+# macOS
+.DS_Store
+
+# Test coverage
+/coverage
+
+# misc
+.eslintcache
+.parcel-cache
+.cache
+.next
+
+# Firebase local emulators and service account files
+.firebase
+firebase-debug.log
+
+# Lockfiles sometimes purposefully checked in; do NOT ignore package-lock.json unless you want to
+# Ignore local install artifacts
+/.yalc
 # Logs
 logs
 *.log
