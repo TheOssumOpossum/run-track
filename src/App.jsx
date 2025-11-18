@@ -147,8 +147,8 @@ function App() {
 
     // --- Main Layout ---
     return (
-        // Main container: ensure content starts at the top, with comfortable padding
-        <div className="w-full min-h-screen bg-white font-sans flex flex-col justify-start items-start p-6 sm:p-8">
+    // Main container: ensure content starts at the top; padding moved into internal containers
+    <div className="w-full min-h-screen bg-white font-sans flex flex-col justify-start items-start">
             {/* Inner container: align content to the top to avoid empty banner/vertical centering */}
             <div className="w-full h-full flex flex-col justify-start items-start">
                 
