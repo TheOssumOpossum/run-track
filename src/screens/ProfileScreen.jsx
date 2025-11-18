@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { UserIcon, LogOutIcon, ActivityIcon, TrophyIcon, BoltIcon, ChartIcon } from '../components/icons';
-import RacesScreen from './RacesScreen';
+import Races from './profile/Races';
+import Runs from './profile/Runs';
+import PersonalBests from './profile/PersonalBests';
+import Stats from './profile/Stats';
+import HighlightsCarousel from './profile/HighlightsCarousel';
 
 export default function ProfileScreen({ user, handleSignOut, loading, appId }) {
     const [profileTab, setProfileTab] = useState('runs'); // runs | races | pbs | stats
@@ -65,20 +69,8 @@ export default function ProfileScreen({ user, handleSignOut, loading, appId }) {
                 )}
             </div>
 
-            {/* Carousel */}
-            <div className="mt-6">
-                <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-gray-800">Highlights</h3>
-                </div>
-                <div className="flex space-x-4 overflow-x-auto pb-2">
-                    {carouselItems.map(item => (
-                        <div key={item.id} className="min-w-[220px] bg-white border border-gray-100 rounded-lg p-4 shadow-sm">
-                            <div className="font-semibold text-gray-800">{item.title}</div>
-                            <div className="text-sm text-gray-600 mt-2">{item.text}</div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            {/* Carousel (extracted) */}
+            <HighlightsCarousel items={carouselItems} />
 
             {/* Tabs */}
             <div className="mt-6">
@@ -93,7 +85,7 @@ export default function ProfileScreen({ user, handleSignOut, loading, appId }) {
                     </button>
                     <button onClick={() => setProfileTab('pbs')} className={`flex items-center space-x-2 pb-2 ${profileTab==='pbs' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-600'}`}>
                         <BoltIcon className="w-5 h-5" />
-                        <span className="text-sm">PBs</span>
+                        <span className="text-sm">Personal Bests</span>
                     </button>
                     <button onClick={() => setProfileTab('stats')} className={`flex items-center space-x-2 pb-2 ${profileTab==='stats' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-600'}`}>
                         <ChartIcon className="w-5 h-5" />
@@ -103,21 +95,10 @@ export default function ProfileScreen({ user, handleSignOut, loading, appId }) {
 
                 {/* Tab content placeholders */}
                 <div className="mt-4">
-                    {profileTab === 'runs' && (
-                        <div className="space-y-3">
-                            <div className="bg-white border border-gray-100 rounded-lg p-3">Run placeholder card</div>
-                            <div className="bg-white border border-gray-100 rounded-lg p-3">Run placeholder card</div>
-                        </div>
-                    )}
-                    {profileTab === 'races' && (
-                        <RacesScreen user={user} />
-                    )}
-                    {profileTab === 'pbs' && (
-                        <div className="space-y-3 text-gray-600">PBs placeholder content</div>
-                    )}
-                    {profileTab === 'stats' && (
-                        <div className="space-y-3 text-gray-600">Statistics placeholder content</div>
-                    )}
+                    {profileTab === 'runs' && <Runs />}
+                    {profileTab === 'races' && <Races user={user} />}
+                    {profileTab === 'pbs' && <PersonalBests />}
+                    {profileTab === 'stats' && <Stats />}
                 </div>
             </div>
 
