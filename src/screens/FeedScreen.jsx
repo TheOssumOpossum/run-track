@@ -7,6 +7,11 @@ export default function FeedScreen({ user }) {
         { id: 3, author: 'Taylor Sprint', time: '1d', text: 'Trail recommendation: Pine Ridge loop — so scenic.' },
         { id: 4, author: 'Sam Stride', time: '2d', text: 'PB on the 10k! 42:10. Feeling strong.' },
         { id: 5, author: 'Riley Miles', time: '3d', text: 'Recovery day: yoga and light stretching.' },
+        { id: 6, author: 'Riley Miles', time: '3d', text: 'Recovery day: yoga and light stretching.' },
+        { id: 7, author: 'Riley Miles', time: '3d', text: 'Recovery day: yoga and light stretching.' },
+        { id: 8, author: 'Riley Miles', time: '3d', text: 'Recovery day: yoga and light stretching.' },
+        { id: 9, author: 'Riley Miles', time: '3d', text: 'Recovery day: yoga and light stretching.' },
+        { id: 10, author: 'Riley Miles', time: '3d', text: 'Recovery day: yoga and light stretching.' },
     ];
 
     return (

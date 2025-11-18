@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomeIcon, SearchIcon, AddIcon, ActivityIcon, UserIcon } from './icons';
+import { HomeIcon, SearchIcon, AddIcon, LeaderboardIcon, UserIcon } from './icons';
 
 export default function BottomNav({ activeTab, setActiveTab }) {
     return (
@@ -20,9 +20,9 @@ export default function BottomNav({ activeTab, setActiveTab }) {
                         </div>
                         <span className="sr-only">Add</span>
                     </button>
-                    <button onClick={() => setActiveTab('activity')} className={`flex-1 py-2 flex flex-col items-center text-xs ${activeTab==='activity' ? 'text-indigo-600' : 'text-gray-500'}`}>
-                        <ActivityIcon className="w-6 h-6 mb-1" />
-                        Activity
+                    <button onClick={() => setActiveTab('leaderboard')} className={`flex-1 py-2 flex flex-col items-center text-xs ${activeTab==='leaderboard' ? 'text-indigo-600' : 'text-gray-500'}`}>
+                        <LeaderboardIcon className="w-6 h-6 mb-1" />
+                        Leaderboard
                     </button>
                     <button onClick={() => setActiveTab('profile')} className={`flex-1 py-2 flex flex-col items-center text-xs ${activeTab==='profile' ? 'text-indigo-600' : 'text-gray-500'}`}>
                         <UserIcon className="w-6 h-6 mb-1" />

@@ -59,7 +59,7 @@ export default function Header({ user, handleSignOut, loading, stats = { followe
     : (profileDoc?.following ?? stats.following ?? 0);
 
   return (
-    <div>
+    <div className="py-6 px-4">
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-4">
           {user?.photoURL ? (

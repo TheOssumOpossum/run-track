@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserIcon, LogOutIcon, ActivityIcon, TrophyIcon, BoltIcon, ChartIcon } from '../components/icons';
+import { UserIcon, LogOutIcon, LeaderboardIcon, TrophyIcon, BoltIcon, ChartIcon, RunningShoeIcon } from '../components/icons';
 import Races from './profile/Races';
 import Runs from './profile/Runs';
 import PersonalBests from './profile/PersonalBests';
@@ -22,17 +22,17 @@ export default function ProfileScreen({ user, handleSignOut, loading, appId }) {
     };
 
     return (
-        <div className="w-full max-w-3xl mx-auto py-6 px-4">
+    <div className="w-full max-w-3xl mx-auto">
             <Header user={user} handleSignOut={handleSignOut} loading={loading} stats={stats} />
 
             {/* Carousel (extracted) */}
             <HighlightsCarousel items={carouselItems} />
 
             {/* Tabs */}
-            <div className="mt-6">
+            <div className="mt-6 py-6 px-4">
                 <div className="flex space-x-2 border-b border-gray-100 pb-2">
                     <button onClick={() => setProfileTab('runs')} className={`flex items-center space-x-2 pb-2 ${profileTab==='runs' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-600'}`}>
-                        <ActivityIcon className="w-5 h-5" />
+                        <RunningShoeIcon className="w-5 h-5" />
                         <span className="text-sm">Runs</span>
                     </button>
                     <button onClick={() => setProfileTab('races')} className={`flex items-center space-x-2 pb-2 ${profileTab==='races' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-600'}`}>

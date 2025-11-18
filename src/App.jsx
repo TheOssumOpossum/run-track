@@ -18,18 +18,19 @@ import {
     HomeIcon,
     SearchIcon,
     AddIcon,
-    ActivityIcon,
     TrophyIcon,
     BoltIcon,
     ChartIcon,
+    LeaderboardIcon,
 } from './components/icons';
 import BottomNav from './components/BottomNav';
+import TopNav from './components/TopNav';
 import SignInScreen from './screens/SignInScreen';
 import FeedScreen from './screens/FeedScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SearchScreen from './screens/SearchScreen';
 import AddScreen from './screens/AddScreen';
-import ActivityScreen from './screens/ActivityScreen';
+import LeaderboardScreen from './screens/LeaderboardScreen';
 
 // --- Global Variable Handling (MANDATORY) ---
 const firebaseConfig = {
@@ -51,7 +52,7 @@ function App() {
     const [user, setUser] = useState(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState('home'); // home | search | add | activity | profile
+    const [activeTab, setActiveTab] = useState('home'); // home | search | add | leaderboard | profile
 
     // 1. Firebase Initialization and Authentication Listener
     useEffect(() => {
@@ -143,7 +144,7 @@ function App() {
     // Extracted screens are in separate files under src/screens
     // App orchestrates them and passes required props
     
-    // Note: SignInScreen, FeedScreen, ProfileScreen, SearchScreen, AddScreen, ActivityScreen are imported above
+    // Note: SignInScreen, FeedScreen, ProfileScreen, SearchScreen, AddScreen, LeaderboardScreen are imported above
 
     // --- Main Layout ---
     return (
@@ -151,6 +152,8 @@ function App() {
     <div className="w-full min-h-screen bg-white font-sans flex flex-col justify-start items-start">
             {/* Inner container: align content to the top to avoid empty banner/vertical centering */}
             <div className="w-full h-full flex flex-col justify-start items-start">
+                {/* Top navigation */}
+                <TopNav />
                 
                 {/* Loading State */}
                 {loading && !auth && !user ? (
@@ -168,7 +171,7 @@ function App() {
                             {activeTab === 'home' && <FeedScreen user={user} />}
                             {activeTab === 'search' && <SearchScreen user={user} />}
                             {activeTab === 'add' && <AddScreen />}
-                            {activeTab === 'activity' && <ActivityScreen />}
+                            {activeTab === 'leaderboard' && <LeaderboardScreen />}
                             {activeTab === 'profile' && <ProfileScreen user={user} handleSignOut={handleSignOut} loading={loading} appId={appId} />}
                         </div>
 
