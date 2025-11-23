@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function HighlightsCarousel({ items = [] }) {
   return (
-    <div className="mt-6">
+    <div>
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-lg font-semibold text-gray-800">Highlights</h3>
       </div>
