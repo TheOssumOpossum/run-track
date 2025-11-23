@@ -153,7 +153,7 @@ function App() {
             {/* Inner container: align content to the top to avoid empty banner/vertical centering */}
             <div className="w-full h-full flex flex-col justify-start items-start">
                 {/* Top navigation */}
-                <TopNav />
+                <TopNav handleSignOut={handleSignOut} loading={loading} />
                 
                 {/* Loading State */}
                 {loading && !auth && !user ? (

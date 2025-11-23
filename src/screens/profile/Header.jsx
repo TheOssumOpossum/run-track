@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { UserIcon, LogOutIcon } from '../../components/icons';
+import { UserIcon } from '../../components/icons';
 import { getApp, getApps } from 'firebase/app';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 
-export default function Header({ user, handleSignOut, loading, stats = { followers: 0, following: 0 } }) {
+export default function Header({ user, loading, stats = { followers: 0, following: 0 } }) {
   const [profileDoc, setProfileDoc] = useState(null);
   const [profileLoading, setProfileLoading] = useState(true);
   const [profileError, setProfileError] = useState('');
@@ -59,7 +59,7 @@ export default function Header({ user, handleSignOut, loading, stats = { followe
     : (profileDoc?.following ?? stats.following ?? 0);
 
   return (
-    <div className="py-6 px-4">
+    <div className="py-4 px-4">
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-4">
           {user?.photoURL ? (
@@ -88,12 +88,6 @@ export default function Header({ user, handleSignOut, loading, stats = { followe
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="ml-4">
-          <button onClick={handleSignOut} disabled={loading} className="px-3 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-            {loading ? 'Signing out...' : <span className="inline-flex items-center"><LogOutIcon className="w-4 h-4 mr-1" />Sign out</span>}
-          </button>
         </div>
       </div>
 

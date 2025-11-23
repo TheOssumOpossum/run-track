@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { RunningShoeIcon, BellIcon, MenuIcon } from './icons';
+import { RunningShoeIcon, BellIcon, MenuIcon, LogOutIcon } from './icons';
 
-export default function TopNav() {
+export default function TopNav({ handleSignOut, loading }) {
     const [openBell, setOpenBell] = useState(false);
     const [openMenu, setOpenMenu] = useState(false);
     const bellRef = useRef(null);
@@ -73,6 +73,19 @@ export default function TopNav() {
                                     <li className="px-4 py-2 text-sm text-gray-700">Profile</li>
                                     <li className="px-4 py-2 text-sm text-gray-700">Settings</li>
                                     <li className="px-4 py-2 text-sm text-gray-700">Help</li>
+                                    <li>
+                                        <button
+                                            onClick={() => {
+                                                if (handleSignOut) handleSignOut();
+                                                setOpenMenu(false);
+                                            }}
+                                            disabled={loading}
+                                            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center space-x-2"
+                                        >
+                                            <LogOutIcon className="w-4 h-4" />
+                                            <span>{loading ? 'Signing out…' : 'Sign out'}</span>
+                                        </button>
+                                    </li>
                                 </ul>
                             </div>
                         )}
